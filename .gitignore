@@ -69,3 +69,4 @@ items.jl
 out.json
 scrape_out
 eJobs Online_files/
+chromedriver**
