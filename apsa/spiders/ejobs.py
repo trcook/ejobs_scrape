@@ -57,13 +57,15 @@ class EjobsSpider(scrapy.Spider):
             page_link.click()
             time.sleep(3)
             hxs=Selector(text=self.br.page_source,type='html')
-            out=hxs.xpath('//td//a/@onclick[string()]').extract()
-            for idx,i in enumerate(out):#enumerate(out[0:3]): # for testing
-                out[idx]=re.findall('http://.+?(?=\')',str(i))
-            out=list(itertools.chain(*out))
-            logging.debug("output from out is %s:"%out)
-            for i in out:
-                yield scrapy.Request(i,self.after_parse)
+            rows=hxs.xpath('//table[@class="rgMasterTable"]/tbody/tr')
+            outframe=[{"link":i.xpath("td[2]/a/@onclick[string()]").extract()[0],
+                       "date":str(i.xpath("td[6]//text()").extract()[0])} for i in rows]
+            for idx,i in enumerate(outframe):#enumerate(out[0:3]): # for testing
+                outframe[idx]['link']=re.findall('http://.+?(?=\')',str(i['link']))[0]
+                request=scrapy.Request(outframe[idx]['link'],self.after_parse)
+                request.meta['post_date']=outframe[idx]['date']
+                logging.debug("requesting: %s"%request.url)
+                yield request
 
     
     def after_parse(self,response):
@@ -74,6 +76,7 @@ class EjobsSpider(scrapy.Spider):
         scrapy_item['desc']=hxs.xpath('//span[@id="dnn_ctr4356_ViewJobBank_ViewJob_lb_JobText"]//text()').extract()
         scrapy_item['school']=hxs.xpath('//span[@id="dnn_ctr4356_ViewJobBank_ViewJob_lb_Company"]//text()').extract()   
         scrapy_item['url']=response.url
+        scrapy_item['post_date']=response.meta['post_date']
         scrapy_item['due_date']=[]
         return scrapy_item
     

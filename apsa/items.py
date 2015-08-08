@@ -14,5 +14,6 @@ class ApsaItem(scrapy.Item):
     due_date=scrapy.Field()
     desc=scrapy.Field()
     school=scrapy.Field()
+    post_date=scrapy.Field()
     url=scrapy.Field()
     pass
