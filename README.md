@@ -1,7 +1,13 @@
 ejobs_scrape
 =================
 
-I hate keeping track of the job search manually. There are a lot of good jobs posted -- that's a good thing. This scrapy project will log you into your ejobs account ( you need to have one and it needs to be paid up ).
+I hate keeping track of the job search manually. There are a lot of good jobs
+posted -- that's a good thing. This scrapy project will log you into your ejobs
+account ( you need to have one and it needs to be paid up ). It will then pull
+jobs for your desired subfield into a spreadsheet listing the start date, due
+date for submissions and description.
+
+- Because, let's admit it, we were all going to make this spreadsheet anyway and why not just automate the process.
 
 
 
