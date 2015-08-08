@@ -1,0 +1,14 @@
+username: your_user_name
+password: your_password
+subfield: INTLREL
+# other subfield codes:
+# For methods:
+# METHOD
+# for american:
+# GOV
+# for public admin:
+# PUBLIC
+# for theory:
+# THEORY
+# for comparative:
+# COMP
