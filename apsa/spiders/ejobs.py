@@ -59,7 +59,7 @@ class EjobsSpider(scrapy.Spider):
             hxs=Selector(text=self.br.page_source,type='html')
             rows=hxs.xpath('//table[@class="rgMasterTable"]/tbody/tr')
             outframe=[{"link":i.xpath("td[2]//a/@href").extract()[0],
-                       "date":str(i.xpath("td[6]//text()").extract())}
+                       "date":str(i.xpath("td[6]//text()").extract()[0])}
                        for i in rows]
             for idx,i in enumerate(outframe):#enumerate(out[0:3]): # for testing
                 request=scrapy.Request(outframe[idx]['link'],self.after_parse)
